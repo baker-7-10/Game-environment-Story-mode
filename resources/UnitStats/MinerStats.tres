@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UnitStats" format=3]
+
+[ext_resource type="Script" path="res://scripts/units/UnitStats.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+unit_name = "Miner"
+max_health = 60.0
+damage = 0.0
+attack_speed = 0.0
+move_speed = 80.0
+attack_range = 0.0
+gold_cost = 50
+attack_cooldown = 10.0

@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/Unit.tscn" id="1"]
+[ext_resource type="Script" path="res://scripts/units/Swordsman.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/units/states/IdleState.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/units/states/MoveState.gd" id="4"]
+[ext_resource type="Script" path="res://scripts/units/states/AttackState.gd" id="5"]
+[ext_resource type="Script" path="res://scripts/units/states/DeadState.gd" id="6"]
+[ext_resource type="Resource" path="res://resources/UnitStats/SwordsmanStats.tres" id="7"]
+
+[node name="Swordsman" instance=ExtResource("1")]
+script = ExtResource("2")
+stats = ExtResource("7")
+
+[node name="Visual" parent="."]
+color = Color(0.3, 0.6, 1.0, 1)
+
+[node name="StateMachine" parent="."]
+initial_state = "idle"
+
+[node name="idle" type="Node" parent="StateMachine"]
+script = ExtResource("3")
+
+[node name="move" type="Node" parent="StateMachine"]
+script = ExtResource("4")
+
+[node name="attack" type="Node" parent="StateMachine"]
+script = ExtResource("5")
+
+[node name="dead" type="Node" parent="StateMachine"]
+script = ExtResource("6")

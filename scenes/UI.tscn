@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/UI.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/SpawnButton.gd" id="2"]
+
+[node name="UI" type="CanvasLayer"]
+layer = 1
+script = ExtResource("1")
+
+[node name="GoldLabel" type="Label" parent="."]
+offset_left = 16
+offset_top = 16
+offset_right = 200
+offset_bottom = 48
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Gold: $300"
+
+[node name="SpawnContainer" type="HBoxContainer" parent="."]
+offset_left = 364
+offset_top = 660
+offset_right = 916
+offset_bottom = 720
+alignment = 1
+
+[node name="SwordsmanButton" type="Button" parent="SpawnContainer"]
+custom_minimum_size = Vector2(160, 50)
+script = ExtResource("2")
+unit_type = "swordsman"
+unit_cost = 100
+text = "Swordsman $100"
+
+[node name="ArcherButton" type="Button" parent="SpawnContainer"]
+custom_minimum_size = Vector2(160, 50)
+script = ExtResource("2")
+unit_type = "archer"
+unit_cost = 150
+text = "Archer $150"
+
+[node name="MinerButton" type="Button" parent="SpawnContainer"]
+custom_minimum_size = Vector2(160, 50)
+script = ExtResource("2")
+unit_type = "miner"
+unit_cost = 50
+text = "Miner $50"
+
+[node name="GameOverOverlay" type="ColorRect" parent="."]
+visible = false
+offset_left = 0
+offset_top = 0
+offset_right = 1280
+offset_bottom = 720
+color = Color(0, 0, 0, 0.7)
+mouse_filter = 2
+process_mode = 2
+
+[node name="WinnerLabel" type="Label" parent="GameOverOverlay"]
+offset_left = 440
+offset_top = 260
+offset_right = 840
+offset_bottom = 340
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "GAME OVER"
+
+[node name="RestartButton" type="Button" parent="GameOverOverlay"]
+offset_left = 540
+offset_top = 380
+offset_right = 740
+offset_bottom = 440
+theme_override_font_sizes/font_size = 24
+text = "Restart"

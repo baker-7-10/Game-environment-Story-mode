@@ -1,0 +1,24 @@
+; Stick War Legacy-style 2D Strategy Game for Godot 4
+config_version=5
+
+[application]
+config/name="Stick War Legacy-style Game"
+run/main_scene="res://scenes/Main.tscn"
+config/features=PackedStringArray("4.4", "Forward Plus")
+config/icon="res://assets/icon.svg"
+
+[autoload]
+Global="*res://scripts/core/Global.gd"
+SignalBus="*res://scripts/core/SignalBus.gd"
+
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/mode=0
+window/size/always_on_top=false
+
+[physics]
+2d/default_gravity=0
+
+[rendering]
+2d/snap/snap_by_transformation=true
