@@ -1,0 +1,18 @@
+# Godot 4
+.import/
+export.cfg
+export_presets.cfg
+.mono/
+data_*/
+android/
+ios/
+.vs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+*.iml
+.idea/
+.vscode/

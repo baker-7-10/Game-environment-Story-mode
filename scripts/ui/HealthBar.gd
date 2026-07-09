@@ -1,8 +1,4 @@
 extends Node2D
-class_name HealthBar
-
-# Draw-based world-space health bar. No external textures needed.
-# Updates via queue_redraw() when value changes.
 
 var value: float = 1.0
 var bar_width: float = 40.0

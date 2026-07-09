@@ -1,4 +1,4 @@
-extends Unit
+extends "res://scripts/units/Unit.gd"
 
 func _ready() -> void:
 	super._ready()

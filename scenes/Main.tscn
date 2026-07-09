@@ -41,11 +41,11 @@ position = Vector2(1130, 360)
 
 [node name="Projectiles" type="Node2D" parent="World"]
 
-[node name="PlayerBase" instance=ExtResource("3")]
+[node name="PlayerBase" parent="World" instance=ExtResource("3")]
 position = Vector2(80, 360)
 team = 0
 
-[node name="EnemyBase" instance=ExtResource("3")]
+[node name="EnemyBase" parent="World" instance=ExtResource("3")]
 position = Vector2(1200, 360)
 scale = Vector2(-1, 1)
 team = 1
@@ -61,7 +61,7 @@ color = Color(1, 0.8, 0, 0.5)
 [node name="GoldMine/CollisionShape2D" type="CollisionShape2D" parent="World/GoldMine"]
 shape = SubResource("5")
 
-[node name="UI" instance=ExtResource("2")]
+[node name="UI" parent="." instance=ExtResource("2")]
 
 [node name="EnemyAI" type="Node" parent="."]
 script = ExtResource("4")

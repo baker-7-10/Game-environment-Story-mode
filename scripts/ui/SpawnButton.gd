@@ -1,5 +1,4 @@
 extends Button
-class_name SpawnButton
 
 @export var unit_type: String = "swordsman"
 @export var unit_cost: int = 100

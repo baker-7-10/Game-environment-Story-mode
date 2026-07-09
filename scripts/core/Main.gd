@@ -1,17 +1,11 @@
 extends Node2D
 
-# Orchestrates the match: spawn points, unit containers, signal wiring.
-# Connects unit_spawned to spawning logic and game-over to pause/restart flow.
-
 var unit_scenes: Dictionary = {}
 var player_spawn_point: Marker2D
 var enemy_spawn_point: Marker2D
 var player_units_container: Node2D
 var enemy_units_container: Node2D
 var projectiles_container: Node2D
-var player_base: Base
-var enemy_base: Base
-var gold_mine_area: Area2D
 
 @onready var world: Node2D = $World
 
@@ -25,9 +19,6 @@ func _ready() -> void:
 	player_units_container = $World/PlayerUnits
 	enemy_units_container = $World/EnemyUnits
 	projectiles_container = $World/Projectiles
-	player_base = $World/PlayerBase
-	enemy_base = $World/EnemyBase
-	gold_mine_area = $World/GoldMine
 
 	SignalBus.unit_spawned.connect(_on_unit_spawned)
 	SignalBus.game_restarted.connect(_on_game_restarted)

@@ -1,15 +1,9 @@
 extends Node
 
-# Global autoload singleton for cross-system match state.
-# Central authority for gold, game-over state, and match time.
-# No other system should mutate economy data directly — they must go through
-# this singleton or SignalBus to keep the data flow traceable.
-
 var match_time: float = 0.0
 var is_game_over: bool = false
-var winner: int = -1  # -1=none, 0=player, 1=enemy
+var winner: int = -1
 
-# Team gold tracked here as single source of truth.
 var player_gold: int = 0
 var enemy_gold: int = 0
 

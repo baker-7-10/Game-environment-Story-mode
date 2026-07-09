@@ -23,7 +23,9 @@ func _process(delta: float) -> void:
 		_on_hit_target()
 
 func _on_body_entered(body: Node2D) -> void:
-	if body == target or (body is Unit and body.team != team):
+	var is_target = (body == target)
+	var is_enemy = body.has_method("get_team") and body.get_team() != team
+	if is_target or is_enemy:
 		if body.has_method("take_damage"):
 			body.take_damage(damage)
 		queue_free()

@@ -1,5 +1,4 @@
 extends CanvasLayer
-class_name GameUI
 
 @onready var gold_label: Label = $GoldLabel
 @onready var game_over_overlay: Control = $GameOverOverlay

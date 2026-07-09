@@ -1,10 +1,11 @@
-class_name DeadState
-extends State
+extends "res://scripts/units/states/State.gd"
 
-# Plays a procedural death animation (topple + fade), then queues free.
-# The Tween approach avoids needing sprite-frame animations.
+func _ready() -> void:
+	super._ready()
 
 func enter(_msg: Dictionary = {}) -> void:
+	if not unit:
+		return
 	unit.collision_layer = 0
 	unit.collision_mask = 0
 	if unit.has_node("AttackRange"):
@@ -22,4 +23,5 @@ func enter(_msg: Dictionary = {}) -> void:
 	unit.velocity = Vector2.ZERO
 
 func physics_update(_delta: float) -> void:
-	unit.move_and_slide()
+	if unit:
+		unit.move_and_slide()

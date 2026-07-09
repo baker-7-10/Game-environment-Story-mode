@@ -1,10 +1,5 @@
 extends Node
 
-# Autonomous enemy AI that spawns units on a timer.
-# Difficulty scales via: spawn_interval = max(min_interval, base_interval - match_time * decay_rate)
-# This formula gives a smooth difficulty ramp rather than step changes.
-# Weighted unit selection shifts from economy focus early to combat focus late.
-
 @export var base_interval: float = 4.0
 @export var min_interval: float = 1.2
 @export var decay_rate: float = 0.02
@@ -17,6 +12,15 @@ var weight_phases: Array = [
 	[60.0, 0.2, 0.5, 0.3],
 	[120.0, 0.1, 0.4, 0.5],
 ]
+
+var _miner_stats: Resource
+var _swordsman_stats: Resource
+var _archer_stats: Resource
+
+func _ready() -> void:
+	_miner_stats = preload("res://resources/UnitStats/MinerStats.tres")
+	_swordsman_stats = preload("res://resources/UnitStats/SwordsmanStats.tres")
+	_archer_stats = preload("res://resources/UnitStats/ArcherStats.tres")
 
 func _process(delta: float) -> void:
 	if Global.is_game_over:
@@ -65,16 +69,17 @@ func _spawn_unit() -> void:
 		type = "archer"
 
 	var stats = _get_stats_for_type(type)
-	if stats and Global.get_gold(Global.ENEMY_TEAM) >= stats.gold_cost:
-		Global.modify_gold(Global.ENEMY_TEAM, -stats.gold_cost)
+	var cost = stats.gold_cost if stats and "gold_cost" in stats else 999
+	if stats and Global.get_gold(Global.ENEMY_TEAM) >= cost:
+		Global.modify_gold(Global.ENEMY_TEAM, -cost)
 		SignalBus.unit_spawned.emit(Global.ENEMY_TEAM, null, type)
 
-func _get_stats_for_type(type: String) -> UnitStats:
+func _get_stats_for_type(type: String) -> Resource:
 	match type:
 		"miner":
-			return preload("res://resources/UnitStats/MinerStats.tres")
+			return _miner_stats
 		"swordsman":
-			return preload("res://resources/UnitStats/SwordsmanStats.tres")
+			return _swordsman_stats
 		"archer":
-			return preload("res://resources/UnitStats/ArcherStats.tres")
+			return _archer_stats
 	return null
