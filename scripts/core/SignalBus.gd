@@ -1,9 +1,5 @@
 extends Node
 
-# Central signal bus — decouples all game systems.
-# Systems emit and listen here instead of reaching into each other.
-# Pattern: any node can connect to SignalBus.<signal_name>.connect(...)
-
 signal gold_changed(team: int, amount: int)
 signal unit_spawned(team: int, unit: Node2D, type: String)
 signal unit_died(team: int, unit: Node2D)
@@ -12,3 +8,9 @@ signal base_damaged(team: int, health: float, max_health: float)
 signal base_destroyed(team: int)
 signal game_over(winner: int)
 signal game_restarted()
+signal army_stance_changed(stance: int)
+
+signal population_changed(team: int, current: int, max_pop: int)
+signal rage_changed(team: int, current: float, max_rage: float)
+signal rage_activated(team: int, duration: float)
+signal rage_deactivated(team: int)

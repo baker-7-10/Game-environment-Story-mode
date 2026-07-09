@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/Unit.tscn" id="1"]
 [ext_resource type="Script" path="res://scripts/units/Archer.gd" id="2"]
@@ -12,8 +12,10 @@
 script = ExtResource("2")
 stats = ExtResource("7")
 
-[node name="Visual" parent="."]
-color = Color(0.3, 0.6, 1.0, 1)
+[node name="Weapon" type="Polygon2D" parent="Visual/ArmR"]
+polygon = PackedVector2Array(-1, -12, 1, -12, 1, 6, -1, 6)
+color = Color(0.55, 0.35, 0.15, 1)
+position = Vector2(10, 0)
 
 [node name="StateMachine" parent="."]
 initial_state = "idle"

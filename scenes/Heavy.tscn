@@ -1,0 +1,33 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/Unit.tscn" id="1"]
+[ext_resource type="Script" path="res://scripts/units/Heavy.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/units/states/IdleState.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/units/states/MoveState.gd" id="4"]
+[ext_resource type="Script" path="res://scripts/units/states/AttackState.gd" id="5"]
+[ext_resource type="Script" path="res://scripts/units/states/DeadState.gd" id="6"]
+[ext_resource type="Resource" path="res://resources/UnitStats/HeavyStats.tres" id="7"]
+
+[node name="Heavy" instance=ExtResource("1")]
+script = ExtResource("2")
+stats = ExtResource("7")
+
+[node name="Weapon" type="Polygon2D" parent="Visual/ArmR"]
+polygon = PackedVector2Array(-3, -10, 3, -10, 5, 0, -5, 0)
+color = Color(0.6, 0.6, 0.65, 1)
+position = Vector2(10, 0)
+
+[node name="StateMachine" parent="."]
+initial_state = "idle"
+
+[node name="idle" type="Node" parent="StateMachine"]
+script = ExtResource("3")
+
+[node name="move" type="Node" parent="StateMachine"]
+script = ExtResource("4")
+
+[node name="attack" type="Node" parent="StateMachine"]
+script = ExtResource("5")
+
+[node name="dead" type="Node" parent="StateMachine"]
+script = ExtResource("6")

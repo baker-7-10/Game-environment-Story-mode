@@ -1,48 +1,384 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/UI.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/ui/SpawnButton.gd" id="2"]
+
+[sub_resource type="StyleBoxFlat" id="3"]
+bg_color = Color(0.2, 0.25, 0.35, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.45, 0.6, 1)
+
+[sub_resource type="StyleBoxFlat" id="4"]
+bg_color = Color(0.28, 0.34, 0.47, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.6, 0.8, 1)
+
+[sub_resource type="StyleBoxFlat" id="5"]
+bg_color = Color(0.15, 0.18, 0.28, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.35, 0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="6"]
+bg_color = Color(0.1, 0.12, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.15, 0.2, 0.3, 1)
+
+[sub_resource type="StyleBoxFlat" id="7"]
+bg_color = Color(0.08, 0.08, 0.15, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.4, 0.55, 1)
+
+[sub_resource type="StyleBoxFlat" id="8"]
+bg_color = Color(0.2, 0.3, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.5, 0.3, 1)
+
+[sub_resource type="StyleBoxFlat" id="9"]
+bg_color = Color(0.3, 0.4, 0.3, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.6, 0.4, 1)
+
+[sub_resource type="StyleBoxFlat" id="10"]
+bg_color = Color(0.15, 0.2, 0.15, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.3, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="11"]
+bg_color = Color(0.2, 0.35, 0.55, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.6, 0.85, 1)
+
+[sub_resource type="StyleBoxFlat" id="12"]
+bg_color = Color(0.28, 0.45, 0.65, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.7, 0.95, 1)
+
+[sub_resource type="StyleBoxFlat" id="13"]
+bg_color = Color(0.12, 0.14, 0.22, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.25, 0.35, 1)
+
+[sub_resource type="StyleBoxFlat" id="14"]
+bg_color = Color(0.17, 0.2, 0.3, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.3, 0.45, 1)
 
 [node name="UI" type="CanvasLayer"]
 layer = 1
 script = ExtResource("1")
 
-[node name="GoldLabel" type="Label" parent="."]
-offset_left = 16
-offset_top = 16
-offset_right = 200
-offset_bottom = 48
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+[node name="TopPanel" type="Panel" parent="."]
+offset_left = 0
+offset_top = 0
+offset_right = 1280
+offset_bottom = 60
+mouse_filter = 2
+
+[node name="Background" type="ColorRect" parent="TopPanel"]
+offset_left = 0
+offset_top = 0
+offset_right = 1280
+offset_bottom = 60
+color = Color(0.08, 0.08, 0.15, 0.85)
+mouse_filter = 2
+
+[node name="BottomLine" type="ColorRect" parent="TopPanel"]
+offset_left = 0
+offset_top = 58
+offset_right = 1280
+offset_bottom = 60
+color = Color(0.3, 0.4, 0.55, 0.6)
+mouse_filter = 2
+
+[node name="GoldIcon" type="Polygon2D" parent="TopPanel"]
+polygon = PackedVector2Array(8, 0, 4, -6, -4, -6, -8, 0, -4, 6, 4, 6)
+color = Color(1, 0.85, 0.2, 1)
+position = Vector2(36, 30)
+
+[node name="GoldLabel" type="Label" parent="TopPanel"]
+offset_left = 52
+offset_top = 8
+offset_right = 170
+offset_bottom = 52
+theme_override_colors/font_color = Color(1, 1, 0.8, 1)
 theme_override_font_sizes/font_size = 24
-text = "Gold: $300"
+text = "$300"
+
+[node name="PopLabel" type="Label" parent="TopPanel"]
+offset_left = 178
+offset_top = 8
+offset_right = 270
+offset_bottom = 52
+theme_override_colors/font_color = Color(0.5, 0.6, 0.8, 0.8)
+theme_override_font_sizes/font_size = 16
+text = "0/20"
+
+[node name="RageContainer" type="Control" parent="TopPanel"]
+offset_left = 290
+offset_top = 12
+offset_right = 430
+offset_bottom = 48
+mouse_filter = 2
+
+[node name="RageBarBg" type="ColorRect" parent="TopPanel/RageContainer"]
+offset_left = 0
+offset_top = 6
+offset_right = 120
+offset_bottom = 30
+color = Color(0.1, 0.12, 0.2, 0.9)
+mouse_filter = 2
+
+[node name="RageBarFill" type="ColorRect" parent="TopPanel/RageContainer"]
+offset_left = 1
+offset_top = 7
+offset_right = 119
+offset_bottom = 29
+color = Color(0.25, 0.25, 0.35, 1)
+mouse_filter = 2
+
+[node name="RageLabel" type="Label" parent="TopPanel/RageContainer"]
+offset_left = 0
+offset_top = -4
+offset_right = 120
+offset_bottom = 6
+theme_override_colors/font_color = Color(0.6, 0.7, 0.9, 0.5)
+theme_override_font_sizes/font_size = 8
+horizontal_alignment = 1
+text = "RAGE"
+
+[node name="RageButton" type="Button" parent="TopPanel"]
+offset_left = 435
+offset_top = 14
+offset_right = 485
+offset_bottom = 46
+custom_minimum_size = Vector2(50, 32)
+theme_override_styles/normal = SubResource("13")
+theme_override_styles/hover = SubResource("14")
+theme_override_styles/pressed = SubResource("11")
+theme_override_colors/font_color = Color(0.7, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 11
+disabled = true
+text = "R"
+
+[node name="TitleLabel" type="Label" parent="TopPanel"]
+offset_left = 540
+offset_top = 10
+offset_right = 740
+offset_bottom = 50
+theme_override_colors/font_color = Color(0.6, 0.7, 0.9, 0.6)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+text = "STICK WAR"
+
+[node name="StanceLabel" type="Label" parent="TopPanel"]
+offset_left = 840
+offset_top = 12
+offset_right = 910
+offset_bottom = 48
+theme_override_colors/font_color = Color(0.6, 0.7, 0.9, 0.7)
+theme_override_font_sizes/font_size = 14
+vertical_alignment = 1
+text = "STANCE"
+
+[node name="AdvanceButton" type="Button" parent="TopPanel"]
+offset_left = 910
+offset_top = 14
+offset_right = 970
+offset_bottom = 46
+custom_minimum_size = Vector2(60, 32)
+theme_override_styles/normal = SubResource("13")
+theme_override_styles/hover = SubResource("14")
+theme_override_styles/pressed = SubResource("11")
+theme_override_colors/font_color = Color(0.7, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "ADV"
+
+[node name="HoldButton" type="Button" parent="TopPanel"]
+offset_left = 976
+offset_top = 14
+offset_right = 1036
+offset_bottom = 46
+custom_minimum_size = Vector2(60, 32)
+theme_override_styles/normal = SubResource("13")
+theme_override_styles/hover = SubResource("14")
+theme_override_styles/pressed = SubResource("11")
+theme_override_colors/font_color = Color(0.7, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "HLD"
+
+[node name="RetreatButton" type="Button" parent="TopPanel"]
+offset_left = 1042
+offset_top = 14
+offset_right = 1102
+offset_bottom = 46
+custom_minimum_size = Vector2(60, 32)
+theme_override_styles/normal = SubResource("13")
+theme_override_styles/hover = SubResource("14")
+theme_override_styles/pressed = SubResource("11")
+theme_override_colors/font_color = Color(0.7, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "RET"
 
 [node name="SpawnContainer" type="HBoxContainer" parent="."]
-offset_left = 364
+offset_left = 160
 offset_top = 660
-offset_right = 916
+offset_right = 1120
 offset_bottom = 720
 alignment = 1
 
 [node name="SwordsmanButton" type="Button" parent="SpawnContainer"]
-custom_minimum_size = Vector2(160, 50)
+custom_minimum_size = Vector2(140, 50)
+theme_override_styles/normal = SubResource("3")
+theme_override_styles/hover = SubResource("4")
+theme_override_styles/pressed = SubResource("5")
+theme_override_styles/disabled = SubResource("6")
+theme_override_colors/font_color = Color(0.9, 0.9, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.4, 0.4, 0.5, 0.6)
+theme_override_font_sizes/font_size = 12
 script = ExtResource("2")
 unit_type = "swordsman"
 unit_cost = 100
-text = "Swordsman $100"
+text = "SWORD $100"
 
 [node name="ArcherButton" type="Button" parent="SpawnContainer"]
-custom_minimum_size = Vector2(160, 50)
+custom_minimum_size = Vector2(140, 50)
+theme_override_styles/normal = SubResource("3")
+theme_override_styles/hover = SubResource("4")
+theme_override_styles/pressed = SubResource("5")
+theme_override_styles/disabled = SubResource("6")
+theme_override_colors/font_color = Color(0.9, 0.9, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.4, 0.4, 0.5, 0.6)
+theme_override_font_sizes/font_size = 12
 script = ExtResource("2")
 unit_type = "archer"
 unit_cost = 150
-text = "Archer $150"
+text = "ARCH $150"
+
+[node name="HeavyButton" type="Button" parent="SpawnContainer"]
+custom_minimum_size = Vector2(140, 50)
+theme_override_styles/normal = SubResource("3")
+theme_override_styles/hover = SubResource("4")
+theme_override_styles/pressed = SubResource("5")
+theme_override_styles/disabled = SubResource("6")
+theme_override_colors/font_color = Color(0.95, 0.85, 0.75, 1)
+theme_override_colors/font_disabled_color = Color(0.4, 0.4, 0.5, 0.6)
+theme_override_font_sizes/font_size = 12
+script = ExtResource("2")
+unit_type = "heavy"
+unit_cost = 200
+text = "HEAVY $200"
+
+[node name="FastButton" type="Button" parent="SpawnContainer"]
+custom_minimum_size = Vector2(140, 50)
+theme_override_styles/normal = SubResource("3")
+theme_override_styles/hover = SubResource("4")
+theme_override_styles/pressed = SubResource("5")
+theme_override_styles/disabled = SubResource("6")
+theme_override_colors/font_color = Color(0.75, 0.9, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.4, 0.4, 0.5, 0.6)
+theme_override_font_sizes/font_size = 12
+script = ExtResource("2")
+unit_type = "fast"
+unit_cost = 120
+text = "FAST $120"
 
 [node name="MinerButton" type="Button" parent="SpawnContainer"]
-custom_minimum_size = Vector2(160, 50)
+custom_minimum_size = Vector2(140, 50)
+theme_override_styles/normal = SubResource("8")
+theme_override_styles/hover = SubResource("9")
+theme_override_styles/pressed = SubResource("10")
+theme_override_styles/disabled = SubResource("6")
+theme_override_colors/font_color = Color(0.9, 1, 0.9, 1)
+theme_override_colors/font_disabled_color = Color(0.4, 0.4, 0.5, 0.6)
+theme_override_font_sizes/font_size = 12
 script = ExtResource("2")
 unit_type = "miner"
 unit_cost = 50
-text = "Miner $50"
+text = "MINER $50"
 
 [node name="GameOverOverlay" type="ColorRect" parent="."]
 visible = false
@@ -50,24 +386,59 @@ offset_left = 0
 offset_top = 0
 offset_right = 1280
 offset_bottom = 720
-color = Color(0, 0, 0, 0.7)
+color = Color(0, 0, 0, 0.75)
 mouse_filter = 2
 process_mode = 2
+
+[node name="Panel" type="Panel" parent="GameOverOverlay"]
+offset_left = 440
+offset_top = 240
+offset_right = 840
+offset_bottom = 430
+theme_override_styles/panel = SubResource("7")
 
 [node name="WinnerLabel" type="Label" parent="GameOverOverlay"]
 offset_left = 440
 offset_top = 260
 offset_right = 840
 offset_bottom = 340
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 48
 horizontal_alignment = 1
 vertical_alignment = 1
 text = "GAME OVER"
 
 [node name="RestartButton" type="Button" parent="GameOverOverlay"]
-offset_left = 540
-offset_top = 380
-offset_right = 740
-offset_bottom = 440
-theme_override_font_sizes/font_size = 24
-text = "Restart"
+offset_left = 530
+offset_top = 355
+offset_right = 750
+offset_bottom = 410
+theme_override_styles/normal = SubResource("3")
+theme_override_styles/hover = SubResource("4")
+theme_override_styles/pressed = SubResource("5")
+theme_override_colors/font_color = Color(0.9, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "RETRY"
+
+[node name="LevelSelectButton" type="Button" parent="GameOverOverlay"]
+offset_left = 530
+offset_top = 420
+offset_right = 750
+offset_bottom = 470
+theme_override_styles/normal = SubResource("3")
+theme_override_styles/hover = SubResource("4")
+theme_override_styles/pressed = SubResource("5")
+theme_override_colors/font_color = Color(0.9, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "LEVEL SELECT"
+
+[node name="ShopButton" type="Button" parent="GameOverOverlay"]
+offset_left = 530
+offset_top = 480
+offset_right = 750
+offset_bottom = 530
+theme_override_styles/normal = SubResource("3")
+theme_override_styles/hover = SubResource("4")
+theme_override_styles/pressed = SubResource("5")
+theme_override_colors/font_color = Color(0.9, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "UPGRADE SHOP"

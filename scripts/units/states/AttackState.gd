@@ -13,6 +13,11 @@ func update(_delta: float) -> void:
 		unit.state_machine.change_to("move")
 		return
 
+	if unit.team == Global.PLAYER_TEAM and Global.player_stance == Global.ArmyStance.RETREAT and unit.can_attack():
+		if unit.global_position.distance_to(unit.get_base_position()) > 20.0:
+			unit.state_machine.change_to("move")
+			return
+
 	if unit.can_attack():
 		unit.perform_attack()
 

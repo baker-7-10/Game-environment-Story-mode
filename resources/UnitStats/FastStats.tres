@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UnitStats" format=3]
+
+[ext_resource type="Script" path="res://scripts/units/UnitStats.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+unit_name = "Fast"
+max_health = 70.0
+damage = 10.0
+attack_speed = 1.0
+move_speed = 150.0
+attack_range = 35.0
+gold_cost = 120
+attack_cooldown = 0.6

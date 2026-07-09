@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="MissionResource" format=3]
+
+[ext_resource type="Script" path="res://scripts/meta/MissionResource.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+mission_id = 2
+mission_name = "Heavy Reinforcements"
+description = "The enemy has deployed armored units. Bring your best."
+starting_gold_player = 300
+starting_gold_enemy = 300
+enemy_base_interval = 4.0
+enemy_min_interval = 1.5
+enemy_decay_rate = 0.015
+enemy_weight_phases = Array[Array]([[0.0, 0.6, 0.2, 0.1, 0.1, 0.0], [45.0, 0.3, 0.25, 0.2, 0.15, 0.1], [90.0, 0.15, 0.2, 0.25, 0.2, 0.2]])
+reward_currency = 50

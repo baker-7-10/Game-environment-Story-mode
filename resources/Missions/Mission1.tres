@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="MissionResource" format=3]
+
+[ext_resource type="Script" path="res://scripts/meta/MissionResource.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+mission_id = 1
+mission_name = "First Contact"
+description = "A small enemy force approaches. Hold the line and destroy their base."
+starting_gold_player = 400
+starting_gold_enemy = 200
+enemy_base_interval = 5.0
+enemy_min_interval = 2.0
+enemy_decay_rate = 0.01
+enemy_weight_phases = Array[Array]([[0.0, 0.7, 0.2, 0.1, 0.0, 0.0], [60.0, 0.5, 0.3, 0.2, 0.0, 0.0]])
+reward_currency = 30

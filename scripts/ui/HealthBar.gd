@@ -13,10 +13,13 @@ func update_value(v: float) -> void:
 
 func _draw() -> void:
 	var half_w = bar_width / 2.0
-	draw_rect(Rect2(-half_w, 0, bar_width, bar_height), Color(0.15, 0.15, 0.15, 0.9))
+	var bg_rect = Rect2(-half_w, 0, bar_width, bar_height)
+	draw_rect(bg_rect, Color(0.1, 0.1, 0.1, 0.95))
+	draw_rect(Rect2(-half_w - 1, -1, bar_width + 2, bar_height + 2), Color(0.4, 0.4, 0.4, 0.8), false, 1.0)
+
 	var fill_color = Color.GREEN
 	if value < 0.3:
 		fill_color = Color.RED
 	elif value < 0.6:
 		fill_color = Color.YELLOW
-	draw_rect(Rect2(-half_w, 0, bar_width * value, bar_height), fill_color)
+	draw_rect(Rect2(-half_w + 1, 1, (bar_width - 2) * value, bar_height - 2), fill_color)

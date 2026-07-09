@@ -98,6 +98,7 @@ res://
 | `base_destroyed(team)` | `Base.destroy` | `Global.declare_game_over` | Trigger win/lose check |
 | `game_over(winner)` | `Global.declare_game_over` | `UI._on_game_over` | Show game-over overlay |
 | `game_restarted()` | `UI._on_restart_pressed` | `Main._on_game_restarted` | Clean up before scene reload |
+| `army_stance_changed(stance)` | `UI._set_stance` | (extensible) | Broadcast army stance change to all player units |
 
 ---
 
@@ -173,6 +174,35 @@ Both unit types reuse the same FSM framework with different state sets — provi
 
 ---
 
+## Army Command System (Stance Control)
+
+The player can command the whole army's stance in real time via 3 UI buttons (or keyboard: **Q**=ADVANCE, **W**=HOLD, **E**=RETREAT).
+
+### Stances
+
+| Stance | Behavior |
+|---|---|
+| **ADVANCE** (default) | Units walk forward and engage any enemy in range — unchanged from the original behavior. |
+| **HOLD** | Units stop walking and hold their position. They still acquire targets and attack anything that enters their attack range, but they do not pursue. |
+| **RETREAT** | Units walk backward toward their own base. They can still fight back if attacked (one attack per engagement before falling back). Once they reach the base, they stop and hold or idle there. |
+
+### Signal flow
+
+1. Player presses a stance button (or Q/W/E).
+2. `UI._set_stance()` sets `Global.player_stance` and emits `SignalBus.army_stance_changed(stance)`.
+3. Each player unit's FSM state reads `Global.player_stance` on its next `update()` call — no per-unit broadcasting needed.
+4. `MoveState`, `IdleState`, and `AttackState` all check the stance and adjust behavior accordingly.
+
+**Miners are exempt.** Miners run their own `MinerMove → Mine → Deposit` FSM cycle and ignore the army stance entirely. The stance system only affects `IdleState`, `MoveState`, and `AttackState` — states that miners never use.
+
+### Edge case handling
+
+- A unit mid-attack when RETREAT is pressed finishes its current attack cleanly (the attack timer runs out) before the FSM transitions to `MoveState`, which then respects RETREAT movement.
+- Units that reach their own base while retreating stop and enter `IdleState` — they do not walk past it or oscillate.
+- Dead units are unaffected: `DeadState` does not check stance, and the state machine ignores state changes after death.
+
+---
+
 ## Adding a New Unit Type
 
 To add a 4th unit type (e.g., "Knight") with **zero changes** to Main/UI/AI:
@@ -189,13 +219,65 @@ The unit base class handles targeting, health, hit feedback, death, and state ma
 ## Next Steps / Stretch Goals
 
 ### Performance
+## Combat Juice (Phase 3)
+
+Four visual/audio effects hooked into the existing combat pipeline. None touch the FSM or stance system — they fire as side effects.
+
+### Effect map
+
+| Effect | Triggered by | Location | Duration/Params |
+|---|---|---|---|
+| **Hit-stop** | `Unit.apply_damage_to_target` (melee), `Projectile` on impact (ranged), `Base.take_damage` | `Global.apply_hit_stop(duration)` sets `Engine.time_scale = 0.02` and tracks real time in `Global._process`. Counter-based — simultaneous hits extend the timer rather than stacking. | Normal hits: 0.05s, killing blows: 0.1s, base hits: 0.12s |
+| **Hit particles** | `Unit.apply_damage_to_target`, `Unit.take_damage`, `Projectile` on impact | `HitSpark.tscn` (CPUParticles2D) instantiated at contact point, `finished.connect(queue_free)` for auto-cleanup. Color varies: gold for melee, warm white for arrows. | 6 particles, 0.25s lifetime, 180° spread |
+| **Screen shake** | `Unit.die()` (unit death), `Base.take_damage` (base hit) | `CameraShake2D.gd` applies random offset decaying via `move_toward`. Multiple triggers combine via `max()` — stronger/longer wins. Intensity scales with base damage: low-health bases shake harder. | Unit death: 4px / 0.25s, base hit: 8–20px / 0.35s |
+| **Sound** | `Unit.apply_damage_to_target` (hit), `Base.take_damage` (alarm), `DepositState` (gold), MoveState (footstep) | `SoundManager.gd` at `Main/SoundManager`. 4-player pool for overlapping hits, dedicated players for alarm/gold. All methods stubbed with `pass` and TODO comments — wire when audio assets are available. | — |
+
+### Cleanup guarantees
+
+- `HitSpark` nodes connect `finished → queue_free` — zero leaked particles.
+- `SoundManager` pool is pre-allocated in `_ready` — no AudioStreamPlayer2D nodes created at runtime.
+- Hit-stop counter prevents stacking into longer-than-intended freezes.
+
+---
+
+## Phase 5 — Stick-War-Specific Systems
+
+### Population Cap
+- **Global.MAX_POPULATION** = 20 per team.
+- `Global.get_population(team)` / `modify_population(team, delta)` — incremented in `Main._on_unit_spawned`, decremented in `Main._on_unit_died` (connected to `SignalBus.unit_died`).
+- `SpawnButton._process` and `EnemyAI._spawn_unit` both check `get_population(team) < MAX_POPULATION` before allowing a spawn.
+- Population frees up only after the death tween completes (0.6s after `die()`), per the existing `DeadState` flow.
+
+### Rage Meter
+- **Fill**: passive at 4 rage/sec (`Global._process`). One source, consistent: time.
+- **Trigger**: player presses the **R** key or clicks the **R** button in the top panel. Only fires when `player_rage >= RAGE_MAX (100)`.
+- **Effect**: 8-second buff to all alive player units. `Unit._stat()` checks `Global.is_rage_active()` and multiplies `damage` ×1.5, `move_speed` ×1.3, divides `attack_cooldown` by 1.3.
+- **Visual**: `StickFigure.set_rage_glow(true)` applies a warm-gold modulate with a sine-wave pulse. `UI.gd` shows the bar filling (blue → gold when full → red during active). Button is disabled during cooldown.
+- **No stacking**: `activate_rage()` returns early if already active.
+
+### New Unit Types
+
+| Unit | Role | HP | Dmg | Speed | Range | Cost | Cooldown | Weapon | Special |
+|---|---|---|---|---|---|---|---|---|---|
+| **Heavy** | Tank | 300 | 30 | 60 | 35 | 200 | 2.0s | Hammer (wide polygon) | Visual scale 1.3×, bigger lunge |
+| **Fast** | Harasser | 70 | 10 | 150 | 35 | 120 | 0.6s | Dagger (short polygon) | 2× damage vs `"archer"` targets |
+
+Both follow the same pattern as Swordsman/Archer: `UnitStats` resource + `Unit.gd` subclass + scene inheriting `Unit.tscn` with FSM states. Registered in `Main.unit_scenes`, `EnemyAI.weight_phases` (5-element arrays: miner, swordsman, archer, heavy, fast), and `SpawnContainer` in `UI.tscn`.
+
+### Formation Offset
+- Applied in `Main._on_unit_spawned` after `container.add_child(unit)`.
+- Each spawn gets a lane index (`idx % 5`) giving a vertical spread of ±20px, plus ±2px random jitter.
+- Miners are exempt (they path to the mine immediately).
+- Small enough that attack-range detection is unaffected.
+
+---
 - **Object pooling** for Projectiles: when many archers fire simultaneously, pooling projectiles avoids allocation/GC churn. Pool would pre-allocate `N` projectile instances and recycle them.
 - **Unit culling**: units far off-screen could skip full state updates (though for a lane game this is less critical).
 
 ### Art & Audio
-- Replace `Polygon2D` placeholders with `AnimatedSprite2D` sprite sheets.
-- Wire `AudioStreamPlayer2D` calls commented in attack/death/damage hooks.
-- Add particle effects (hit sparks, death poof, gold pickup) via `GPUParticles2D`.
+- Replace `Polygon2D` stick figures with `AnimatedSprite2D` sprite sheets for richer animation.
+- Drop actual `.ogg`/`.wav` files into `assets/` and uncomment the `AudioStreamPlayer2D.play()` calls in `SoundManager.gd`, `Base.gd`, and `DepositState.gd`.
+- Add death-poof particles and gold-pickup sparkles (extend the pattern from `HitSpark.tscn`).
 
 ### Gameplay Extensions
 - **Upgrade system**: spend gold to improve unit stats (modify the `UnitStats` resource or create upgraded tiers).
