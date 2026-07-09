@@ -219,7 +219,7 @@ func _on_game_over(winner: int) -> void:
 		# Award currency and mark mission completed
 		var mission = Global.get_mission()
 		if mission:
-			var reward = mission.reward_currency if "reward_currency" in mission else 50
+			var reward = mission.reward_currency if "reward_currency" in mission else 400
 			SaveManager.currency += reward
 			var id = SceneManager.pending_mission_id
 			if id > 0:

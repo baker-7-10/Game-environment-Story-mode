@@ -1,4 +1,5 @@
 extends Resource
+class_name MissionResource
 
 @export var mission_id: int = 1
 @export var mission_name: String = "Mission 1"
@@ -14,4 +15,5 @@ extends Resource
 	[60.0, 0.2, 0.3, 0.2, 0.15, 0.15],
 	[120.0, 0.1, 0.2, 0.25, 0.2, 0.25],
 ]
-@export var reward_currency: int = 50
+@export var reward_currency: int = 400
+@export var enemy_wave_threshold: int = 0

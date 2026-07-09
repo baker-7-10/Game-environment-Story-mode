@@ -14,6 +14,11 @@ var weight_phases: Array = [
 	[120.0, 0.1, 0.2, 0.25, 0.2, 0.25],
 ]
 
+# --- Wave mode ---
+var _wave_mode: bool = false
+var _wave_threshold: int = 5
+var _combat_units: Array = []
+
 func configure_from_mission(mission: Resource) -> void:
 	if not mission:
 		return
@@ -25,6 +30,33 @@ func configure_from_mission(mission: Resource) -> void:
 		decay_rate = mission.enemy_decay_rate
 	if "enemy_weight_phases" in mission and mission.enemy_weight_phases.size() > 0:
 		weight_phases = mission.enemy_weight_phases.duplicate()
+	if "enemy_wave_threshold" in mission and mission.enemy_wave_threshold > 0:
+		_wave_mode = true
+		_wave_threshold = mission.enemy_wave_threshold
+
+func register_unit(unit: Node2D) -> void:
+	if not _wave_mode:
+		return
+	unit.set_hold_wave(true)
+	unit.cmd_move_to(_get_rally_position())
+	_combat_units.append(unit)
+
+func _get_rally_position() -> Vector2:
+	return Vector2(1060, 360 + (randi() % 5 - 2) * 12)
+
+func _release_wave() -> void:
+	for u in _combat_units:
+		if is_instance_valid(u) and not u.is_dead():
+			u.set_hold_wave(false)
+			u.move_to_position = Vector2(-1, -1)
+	_combat_units.clear()
+
+func _check_wave() -> void:
+	if not _wave_mode:
+		return
+	_combat_units = _combat_units.filter(func(u): return is_instance_valid(u) and not u.is_dead())
+	if _combat_units.size() >= _wave_threshold:
+		_release_wave()
 
 var _type_list: Array = ["miner", "swordsman", "archer", "heavy", "fast"]
 
@@ -49,6 +81,8 @@ func _process(delta: float) -> void:
 	if spawn_timer <= 0:
 		spawn_timer = _get_current_interval()
 		_spawn_unit()
+
+	_check_wave()
 
 func _get_current_interval() -> float:
 	var t = Global.match_time

@@ -13,7 +13,7 @@ func enter(_msg: Dictionary = {}) -> void:
 		if sound_mgr and sound_mgr.has_method("play_gold_deposit"):
 			sound_mgr.play_gold_deposit()
 		unit.gold_carried = 0
-	unit.state_machine.change_to("miner_move", {"destination": unit.get_mine_position()})
+	unit.state_machine.change_to("miner_move", {"destination": unit.get_mine_position(), "mine_index": unit.mine_index})
 
 func update(_delta: float) -> void:
 	if unit:

@@ -101,6 +101,9 @@ func _on_unit_spawned(team: int, _unit_ref: Node2D, type: String) -> void:
 	if type == "miner":
 		Global.modify_miner_count(team, 1)
 
+	if team == Global.ENEMY_TEAM and type != "miner":
+		enemy_ai.register_unit(unit)
+
 	Global.modify_population(team, 1)
 
 func _on_unit_died(team: int, unit: Node2D) -> void:

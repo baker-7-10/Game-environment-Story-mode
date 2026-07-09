@@ -12,5 +12,6 @@ starting_gold_enemy = 200
 enemy_base_interval = 5.0
 enemy_min_interval = 2.0
 enemy_decay_rate = 0.01
-enemy_weight_phases = Array[Array]([[0.0, 0.7, 0.2, 0.1, 0.0, 0.0], [60.0, 0.5, 0.3, 0.2, 0.0, 0.0]])
+enemy_weight_phases = Array[Array]([[0.0, 0.2, 0.4, 0.25, 0.15, 0.0], [60.0, 0.15, 0.4, 0.3, 0.15, 0.0]])
+enemy_wave_threshold = 5
 reward_currency = 30

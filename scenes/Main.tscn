@@ -108,6 +108,130 @@ color = Color(0.45, 0.25, 0.07, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/EnemyGoldMine"]
 shape = SubResource("8")
 
+[node name="PlayerGoldMine2" type="Area2D" parent="World"]
+position = Vector2(300, 460)
+monitoring = false
+
+[node name="Cave" type="Polygon2D" parent="World/PlayerGoldMine2"]
+polygon = PackedVector2Array(-23, 8, -21, -6, -16, -16, -8, -22, 0, -24, 8, -22, 16, -16, 21, -6, 23, 8, -23, 8)
+color = Color(0.45, 0.3, 0.12, 1)
+
+[node name="Entrance" type="Polygon2D" parent="World/PlayerGoldMine2"]
+polygon = PackedVector2Array(-16, 8, -14, -4, -9, -13, 0, -15, 9, -13, 14, -4, 16, 8, -16, 8)
+color = Color(0.08, 0.06, 0.04, 1)
+
+[node name="Gold" type="Polygon2D" parent="World/PlayerGoldMine2"]
+polygon = PackedVector2Array(-9, 8, -7, 0, -3, -4, 0, -5, 3, -4, 7, 0, 9, 8, -9, 8)
+color = Color(1, 0.85, 0.1, 0.85)
+
+[node name="PostL" type="Polygon2D" parent="World/PlayerGoldMine2"]
+polygon = PackedVector2Array(-19, 8, -16, 8, -16, -18, -19, -18)
+color = Color(0.45, 0.25, 0.07, 1)
+
+[node name="PostR" type="Polygon2D" parent="World/PlayerGoldMine2"]
+polygon = PackedVector2Array(16, 8, 19, 8, 19, -18, 16, -18)
+color = Color(0.45, 0.25, 0.07, 1)
+
+[node name="Beam" type="Polygon2D" parent="World/PlayerGoldMine2"]
+polygon = PackedVector2Array(-19, -18, 19, -18, 19, -15, -19, -15)
+color = Color(0.45, 0.25, 0.07, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlayerGoldMine2"]
+shape = SubResource("8")
+
+[node name="PlayerGoldMine3" type="Area2D" parent="World"]
+position = Vector2(300, 260)
+monitoring = false
+
+[node name="Cave" type="Polygon2D" parent="World/PlayerGoldMine3"]
+polygon = PackedVector2Array(-23, 8, -21, -6, -16, -16, -8, -22, 0, -24, 8, -22, 16, -16, 21, -6, 23, 8, -23, 8)
+color = Color(0.45, 0.3, 0.12, 1)
+
+[node name="Entrance" type="Polygon2D" parent="World/PlayerGoldMine3"]
+polygon = PackedVector2Array(-16, 8, -14, -4, -9, -13, 0, -15, 9, -13, 14, -4, 16, 8, -16, 8)
+color = Color(0.08, 0.06, 0.04, 1)
+
+[node name="Gold" type="Polygon2D" parent="World/PlayerGoldMine3"]
+polygon = PackedVector2Array(-9, 8, -7, 0, -3, -4, 0, -5, 3, -4, 7, 0, 9, 8, -9, 8)
+color = Color(1, 0.85, 0.1, 0.85)
+
+[node name="PostL" type="Polygon2D" parent="World/PlayerGoldMine3"]
+polygon = PackedVector2Array(-19, 8, -16, 8, -16, -18, -19, -18)
+color = Color(0.45, 0.25, 0.07, 1)
+
+[node name="PostR" type="Polygon2D" parent="World/PlayerGoldMine3"]
+polygon = PackedVector2Array(16, 8, 19, 8, 19, -18, 16, -18)
+color = Color(0.45, 0.25, 0.07, 1)
+
+[node name="Beam" type="Polygon2D" parent="World/PlayerGoldMine3"]
+polygon = PackedVector2Array(-19, -18, 19, -18, 19, -15, -19, -15)
+color = Color(0.45, 0.25, 0.07, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlayerGoldMine3"]
+shape = SubResource("8")
+
+[node name="EnemyGoldMine2" type="Area2D" parent="World"]
+position = Vector2(980, 460)
+monitoring = false
+
+[node name="Cave" type="Polygon2D" parent="World/EnemyGoldMine2"]
+polygon = PackedVector2Array(-23, 8, -21, -6, -16, -16, -8, -22, 0, -24, 8, -22, 16, -16, 21, -6, 23, 8, -23, 8)
+color = Color(0.45, 0.3, 0.12, 1)
+
+[node name="Entrance" type="Polygon2D" parent="World/EnemyGoldMine2"]
+polygon = PackedVector2Array(-16, 8, -14, -4, -9, -13, 0, -15, 9, -13, 14, -4, 16, 8, -16, 8)
+color = Color(0.08, 0.06, 0.04, 1)
+
+[node name="Gold" type="Polygon2D" parent="World/EnemyGoldMine2"]
+polygon = PackedVector2Array(-9, 8, -7, 0, -3, -4, 0, -5, 3, -4, 7, 0, 9, 8, -9, 8)
+color = Color(1, 0.85, 0.1, 0.85)
+
+[node name="PostL" type="Polygon2D" parent="World/EnemyGoldMine2"]
+polygon = PackedVector2Array(-19, 8, -16, 8, -16, -18, -19, -18)
+color = Color(0.45, 0.25, 0.07, 1)
+
+[node name="PostR" type="Polygon2D" parent="World/EnemyGoldMine2"]
+polygon = PackedVector2Array(16, 8, 19, 8, 19, -18, 16, -18)
+color = Color(0.45, 0.25, 0.07, 1)
+
+[node name="Beam" type="Polygon2D" parent="World/EnemyGoldMine2"]
+polygon = PackedVector2Array(-19, -18, 19, -18, 19, -15, -19, -15)
+color = Color(0.45, 0.25, 0.07, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/EnemyGoldMine2"]
+shape = SubResource("8")
+
+[node name="EnemyGoldMine3" type="Area2D" parent="World"]
+position = Vector2(980, 260)
+monitoring = false
+
+[node name="Cave" type="Polygon2D" parent="World/EnemyGoldMine3"]
+polygon = PackedVector2Array(-23, 8, -21, -6, -16, -16, -8, -22, 0, -24, 8, -22, 16, -16, 21, -6, 23, 8, -23, 8)
+color = Color(0.45, 0.3, 0.12, 1)
+
+[node name="Entrance" type="Polygon2D" parent="World/EnemyGoldMine3"]
+polygon = PackedVector2Array(-16, 8, -14, -4, -9, -13, 0, -15, 9, -13, 14, -4, 16, 8, -16, 8)
+color = Color(0.08, 0.06, 0.04, 1)
+
+[node name="Gold" type="Polygon2D" parent="World/EnemyGoldMine3"]
+polygon = PackedVector2Array(-9, 8, -7, 0, -3, -4, 0, -5, 3, -4, 7, 0, 9, 8, -9, 8)
+color = Color(1, 0.85, 0.1, 0.85)
+
+[node name="PostL" type="Polygon2D" parent="World/EnemyGoldMine3"]
+polygon = PackedVector2Array(-19, 8, -16, 8, -16, -18, -19, -18)
+color = Color(0.45, 0.25, 0.07, 1)
+
+[node name="PostR" type="Polygon2D" parent="World/EnemyGoldMine3"]
+polygon = PackedVector2Array(16, 8, 19, 8, 19, -18, 16, -18)
+color = Color(0.45, 0.25, 0.07, 1)
+
+[node name="Beam" type="Polygon2D" parent="World/EnemyGoldMine3"]
+polygon = PackedVector2Array(-19, -18, 19, -18, 19, -15, -19, -15)
+color = Color(0.45, 0.25, 0.07, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/EnemyGoldMine3"]
+shape = SubResource("8")
+
 [node name="SoundManager" type="Node" parent="."]
 script = ExtResource("7")
 

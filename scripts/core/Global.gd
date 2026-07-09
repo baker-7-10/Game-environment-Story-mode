@@ -19,12 +19,13 @@ var player_population: int = 0
 var enemy_population: int = 0
 
 # --- Miner limits ---
-const MAX_MINERS_PER_TEAM: int = 2
+const MAX_MINERS_PER_TEAM: int = 6
 const MAX_MINERS_PER_MINE: int = 2
+const MINE_COUNT: int = 3
 var player_miner_count: int = 0
 var enemy_miner_count: int = 0
-var player_miners_at_mine: Array = []
-var enemy_miners_at_mine: Array = []
+var player_miners_at_mine: Array = [[], [], []]
+var enemy_miners_at_mine: Array = [[], [], []]
 
 # --- Rage meter ---
 const RAGE_MAX: float = 100.0
@@ -134,8 +135,26 @@ func modify_miner_count(team: int, delta: int) -> void:
 	else:
 		enemy_miner_count = max(0, enemy_miner_count + delta)
 
-func get_miners_at_mine(team: int) -> Array:
-	return player_miners_at_mine if team == PLAYER_TEAM else enemy_miners_at_mine
+func get_miners_at_mine(team: int, mine_index: int = 0) -> Array:
+	var arr = player_miners_at_mine if team == PLAYER_TEAM else enemy_miners_at_mine
+	if mine_index < arr.size():
+		return arr[mine_index]
+	return []
+
+func get_miners_at_mine_count(team: int, mine_index: int) -> int:
+	return get_miners_at_mine(team, mine_index).size()
+
+func get_nearest_available_mine(team: int, from_pos: Vector2) -> int:
+	var positions = [Vector2(300, 260), Vector2(300, 360), Vector2(300, 460)] if team == PLAYER_TEAM else [Vector2(980, 260), Vector2(980, 360), Vector2(980, 460)]
+	var best_idx = -1
+	var best_dist = INF
+	for idx in range(MINE_COUNT):
+		if get_miners_at_mine_count(team, idx) < MAX_MINERS_PER_MINE:
+			var d = from_pos.distance_squared_to(positions[idx])
+			if d < best_dist:
+				best_dist = d
+				best_idx = idx
+	return best_idx
 
 func reset_match() -> void:
 	match_time = 0.0
@@ -148,8 +167,8 @@ func reset_match() -> void:
 	enemy_population = 0
 	player_miner_count = 0
 	enemy_miner_count = 0
-	player_miners_at_mine.clear()
-	enemy_miners_at_mine.clear()
+	player_miners_at_mine = [[], [], []]
+	enemy_miners_at_mine = [[], [], []]
 	player_rage = 0.0
 	enemy_rage = 0.0
 	_rage_active = false

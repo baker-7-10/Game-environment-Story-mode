@@ -304,14 +304,14 @@ theme_override_font_sizes/font_size = 12
 text = "RET"
 
 [node name="SpawnContainer" type="HBoxContainer" parent="."]
-offset_left = 160
-offset_top = 660
-offset_right = 1120
+offset_left = 120
+offset_top = 648
+offset_right = 1160
 offset_bottom = 720
 alignment = 1
 
 [node name="SwordsmanButton" type="Button" parent="SpawnContainer"]
-custom_minimum_size = Vector2(140, 50)
+custom_minimum_size = Vector2(140, 68)
 theme_override_styles/normal = SubResource("3")
 theme_override_styles/hover = SubResource("4")
 theme_override_styles/pressed = SubResource("5")
@@ -325,7 +325,7 @@ unit_cost = 100
 text = "SWORD $100"
 
 [node name="ArcherButton" type="Button" parent="SpawnContainer"]
-custom_minimum_size = Vector2(140, 50)
+custom_minimum_size = Vector2(140, 68)
 theme_override_styles/normal = SubResource("3")
 theme_override_styles/hover = SubResource("4")
 theme_override_styles/pressed = SubResource("5")
@@ -339,7 +339,7 @@ unit_cost = 150
 text = "ARCH $150"
 
 [node name="HeavyButton" type="Button" parent="SpawnContainer"]
-custom_minimum_size = Vector2(140, 50)
+custom_minimum_size = Vector2(140, 68)
 theme_override_styles/normal = SubResource("3")
 theme_override_styles/hover = SubResource("4")
 theme_override_styles/pressed = SubResource("5")
@@ -353,7 +353,7 @@ unit_cost = 200
 text = "HEAVY $200"
 
 [node name="FastButton" type="Button" parent="SpawnContainer"]
-custom_minimum_size = Vector2(140, 50)
+custom_minimum_size = Vector2(140, 68)
 theme_override_styles/normal = SubResource("3")
 theme_override_styles/hover = SubResource("4")
 theme_override_styles/pressed = SubResource("5")
@@ -367,7 +367,7 @@ unit_cost = 120
 text = "FAST $120"
 
 [node name="MinerButton" type="Button" parent="SpawnContainer"]
-custom_minimum_size = Vector2(140, 50)
+custom_minimum_size = Vector2(140, 68)
 theme_override_styles/normal = SubResource("8")
 theme_override_styles/hover = SubResource("9")
 theme_override_styles/pressed = SubResource("10")

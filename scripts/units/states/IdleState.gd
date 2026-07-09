@@ -4,6 +4,10 @@ func update(_delta: float) -> void:
 	if not unit:
 		return
 
+	if unit.is_hold_wave():
+		unit.velocity = Vector2.ZERO
+		return
+
 	if unit.team == Global.PLAYER_TEAM and Global.player_stance == Global.ArmyStance.RETREAT and unit.move_to_position == Vector2(-1, -1):
 		unit.state_machine.change_to("move")
 		return

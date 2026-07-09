@@ -22,6 +22,8 @@ var _spark_scene = preload("res://scenes/HitSpark.tscn")
 var selected: bool = false
 var move_to_position: Vector2 = Vector2(-1, -1)
 var direct_control: bool = false
+var mine_index: int = -1
+var hold_wave: bool = false
 
 @onready var visual: Node2D = $Visual
 @onready var selection_ring: Polygon2D = $SelectionRing
@@ -155,11 +157,17 @@ func get_team() -> int:
 func get_unit_type() -> String:
 	return unit_type
 
-func get_mine_position() -> Vector2:
+func get_mine_positions() -> Array:
 	if team == Global.PLAYER_TEAM:
-		return Vector2(300, 360)
+		return [Vector2(300, 260), Vector2(300, 360), Vector2(300, 460)]
 	else:
-		return Vector2(980, 360)
+		return [Vector2(980, 260), Vector2(980, 360), Vector2(980, 460)]
+
+func get_mine_position() -> Vector2:
+	var positions = get_mine_positions()
+	if mine_index >= 0 and mine_index < positions.size():
+		return positions[mine_index]
+	return positions[1]
 
 func get_base_position() -> Vector2:
 	if team == Global.PLAYER_TEAM:
@@ -171,6 +179,12 @@ func set_selected(val: bool) -> void:
 	selected = val
 	if selection_ring:
 		selection_ring.visible = val
+
+func set_hold_wave(val: bool) -> void:
+	hold_wave = val
+
+func is_hold_wave() -> bool:
+	return hold_wave
 
 func cmd_move_to(pos: Vector2) -> void:
 	move_to_position = pos
