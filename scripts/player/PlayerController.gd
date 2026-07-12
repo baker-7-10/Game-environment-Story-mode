@@ -2,15 +2,29 @@ extends Node
 
 var hero: Node2D = null
 
+func select_hero(unit: Node2D) -> void:
+	if hero and is_instance_valid(hero):
+		release_hero()
+	hero = unit
+	hero.set_hero(true)
+
+func release_hero() -> void:
+	if hero and is_instance_valid(hero):
+		hero.set_hero(false)
+	hero = null
+
+func has_hero() -> bool:
+	return hero != null and is_instance_valid(hero) and not hero.is_dead()
+
 func _unhandled_input(event: InputEvent) -> void:
-	if not hero or not is_instance_valid(hero) or hero.is_dead():
+	if not has_hero():
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_SPACE:
 			_hero_attack()
 
 func _physics_process(_delta: float) -> void:
-	if not hero or not is_instance_valid(hero) or hero.is_dead():
+	if not has_hero():
 		return
 
 	var dir = Vector2.ZERO

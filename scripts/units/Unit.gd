@@ -20,6 +20,8 @@ var _sound_mgr: Node
 var _spark_scene = preload("res://scenes/HitSpark.tscn")
 
 var selected: bool = false
+var is_hero: bool = false
+var _hero_label: Label = null
 var move_to_position: Vector2 = Vector2(-1, -1)
 var direct_control: bool = false
 var mine_index: int = -1
@@ -52,8 +54,8 @@ func _ready() -> void:
 	attack_range_area = $AttackRange
 
 	var root = get_tree().current_scene
-	_camera = root.get_node("Camera")
-	_sound_mgr = root.get_node("SoundManager")
+	_camera = root.get_node_or_null("Camera")
+	_sound_mgr = root.get_node_or_null("SoundManager")
 
 	var c = Color(0.3, 0.6, 1.0) if team == Global.PLAYER_TEAM else Color(1.0, 0.3, 0.3)
 	if visual.has_method("set_body_color"):
@@ -63,6 +65,10 @@ func _ready() -> void:
 		var shape_node = attack_range_area.get_node("CollisionShape2D")
 		if shape_node and shape_node.shape is CircleShape2D:
 			shape_node.shape.radius = _stat("attack_range", 50.0)
+
+	if team == Global.PLAYER_TEAM:
+		input_pickable = true
+		input_event.connect(_on_input_event)
 
 func _process(delta: float) -> void:
 	if health_bar and health_bar.has_method("update_hp"):
@@ -180,6 +186,42 @@ func set_selected(val: bool) -> void:
 	if selection_ring:
 		selection_ring.visible = val
 
+func set_hero(val: bool) -> void:
+	is_hero = val
+	if val:
+		if visual and visual.has_method("set_body_color"):
+			visual.set_body_color(Color(1.0, 0.85, 0.2))
+		if visual and visual.has_method("set_rage_glow"):
+			visual.set_rage_glow(true)
+		set_selected(true)
+		_show_hero_name("baker")
+	else:
+		var c = Color(0.3, 0.6, 1.0) if team == Global.PLAYER_TEAM else Color(1.0, 0.3, 0.3)
+		if visual and visual.has_method("set_body_color"):
+			visual.set_body_color(c)
+		if visual and visual.has_method("set_rage_glow"):
+			visual.set_rage_glow(false)
+		set_selected(false)
+		_hide_hero_name()
+
+func _show_hero_name(text: String) -> void:
+	if _hero_label:
+		_hero_label.text = text
+		_hero_label.show()
+		return
+	_hero_label = Label.new()
+	_hero_label.text = text
+	_hero_label.add_theme_font_size_override("font_size", 12)
+	_hero_label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.2))
+	_hero_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_hero_label.position = Vector2(-20, -50)
+	_hero_label.size = Vector2(40, 20)
+	add_child(_hero_label)
+
+func _hide_hero_name() -> void:
+	if _hero_label:
+		_hero_label.hide()
+
 func set_hold_wave(val: bool) -> void:
 	hold_wave = val
 
@@ -204,3 +246,19 @@ func _show_damage_number(amount: float) -> void:
 	tween.tween_property(label, "position:y", -65, 0.6)
 	tween.parallel().tween_property(label, "modulate:a", 0.0, 0.6)
 	tween.finished.connect(label.queue_free)
+
+func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if team != Global.PLAYER_TEAM:
+		return
+	if is_dead():
+		return
+	if not (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed):
+		return
+	var pc = get_tree().current_scene.get_node_or_null("PlayerController")
+	if not pc:
+		return
+	if pc.has_hero() and pc.hero == self:
+		pc.release_hero()
+	else:
+		pc.select_hero(self)
+	get_viewport().set_input_as_handled()

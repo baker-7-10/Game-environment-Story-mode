@@ -7,8 +7,6 @@ var player_units_container: Node2D
 var enemy_units_container: Node2D
 var projectiles_container: Node2D
 
-var hero: Node2D = null
-
 @onready var world: Node2D = $World
 @onready var enemy_ai: Node = $EnemyAI
 
@@ -30,10 +28,8 @@ func _ready() -> void:
 	SignalBus.game_restarted.connect(_on_game_restarted)
 	SignalBus.army_stance_changed.connect(_on_army_stance_changed)
 
-	# Reload mission (SceneManager may have just set pending_mission_id)
 	Global.load_current_mission()
 
-	# Apply mission parameters
 	var mission = Global.get_mission()
 	if mission:
 		if "starting_gold_player" in mission:
@@ -42,30 +38,10 @@ func _ready() -> void:
 			Global.modify_gold(Global.ENEMY_TEAM, mission.starting_gold_enemy)
 		enemy_ai.configure_from_mission(mission)
 	else:
-		# Fallback defaults
 		Global.modify_gold(Global.PLAYER_TEAM, 300)
 		Global.modify_gold(Global.ENEMY_TEAM, 300)
 
-	_spawn_hero()
-
-func _spawn_hero() -> void:
-	var scene = unit_scenes.get("swordsman")
-	if not scene:
-		return
-	var unit = scene.instantiate()
-	unit.team = Global.PLAYER_TEAM
-	unit.unit_type = "swordsman"
-	unit.global_position = player_spawn_point.global_position + Vector2(40, 0)
-	player_units_container.add_child(unit)
-	hero = unit
-	hero.set_selected(true)
-	# tint hero gold
-	if hero.visual and hero.visual.has_method("set_body_color"):
-		hero.visual.set_body_color(Color(1.0, 0.85, 0.2))
-	var pc = get_node("PlayerController")
-	if pc:
-		pc.hero = hero
-	Global.modify_population(Global.PLAYER_TEAM, 1)
+	_spawn_default_unit()
 
 func _on_unit_spawned(team: int, _unit_ref: Node2D, type: String) -> void:
 	var scene = unit_scenes.get(type)
@@ -122,3 +98,14 @@ func _on_game_restarted() -> void:
 		child.queue_free()
 	for child in enemy_units_container.get_children():
 		child.queue_free()
+
+func _spawn_default_unit() -> void:
+	var scene = unit_scenes.get("swordsman")
+	if not scene:
+		return
+	var unit = scene.instantiate()
+	unit.team = Global.PLAYER_TEAM
+	unit.unit_type = "swordsman"
+	unit.global_position = player_spawn_point.global_position + Vector2(40, 0)
+	player_units_container.add_child(unit)
+	Global.modify_population(Global.PLAYER_TEAM, 1)

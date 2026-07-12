@@ -68,9 +68,9 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.keycode:
-			KEY_Q: _set_stance(Global.ArmyStance.ADVANCE, advance_btn)
-			KEY_W: _set_stance(Global.ArmyStance.HOLD, hold_btn)
-			KEY_E: _set_stance(Global.ArmyStance.RETREAT, retreat_btn)
+			KEY_1: _set_stance(Global.ArmyStance.ADVANCE, advance_btn)
+			KEY_2: _set_stance(Global.ArmyStance.HOLD, hold_btn)
+			KEY_3: _set_stance(Global.ArmyStance.RETREAT, retreat_btn)
 			KEY_R: _on_rage_pressed()
 
 	if Global.is_game_over:
@@ -84,7 +84,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			else:
 				_is_dragging = false
 				if _drag_start.distance_to(event.position) < 10:
-					_select_at_position(event.position)
+					_single_click_at(event.position)
 				else:
 					_select_in_rect(_drag_start, event.position)
 
@@ -104,22 +104,10 @@ func _select_unit(unit: Node2D) -> void:
 		unit.set_selected(true)
 
 func _select_at_position(screen_pos: Vector2) -> void:
-	var camera = get_viewport().get_camera_2d()
-	if not camera:
-		return
-	var view_size = get_viewport().size
-	var world_pos = camera.global_position + (screen_pos - view_size / 2) / camera.zoom
-	var space = get_viewport().world_2d.direct_space_state
-	var params = PhysicsPointQueryParameters2D.new()
-	params.position = world_pos
-	params.collision_mask = 1
-	var results = space.intersect_point(params)
-	for r in results:
-		var obj = r.collider
-		if obj and obj.has_method("get_team") and obj.get_team() == Global.PLAYER_TEAM and not obj.is_dead():
-			_select_unit(obj)
-			return
-	_clear_selection()
+	_single_click_at(screen_pos)
+
+func _single_click_at(_screen_pos: Vector2) -> void:
+	pass
 
 func _select_in_rect(from: Vector2, to: Vector2) -> void:
 	_clear_selection()
@@ -127,7 +115,7 @@ func _select_in_rect(from: Vector2, to: Vector2) -> void:
 	if not camera:
 		return
 	var rect = Rect2(from.min(to), (from - to).abs())
-	var view_size = get_viewport().size
+	var view_size = Vector2(get_viewport().size)
 	var main = get_tree().current_scene
 	if not main:
 		return
